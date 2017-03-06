@@ -1,0 +1,6 @@
+@font-face {
+font-family: 'Tofino Thin';
+font-style: normal;
+font-weight: normal;
+src: local('Tofino Thin'), url('Tofino Thin.woff') format('woff');
+}

@@ -1,0 +1,38 @@
+@import './fonts/Geomanist/Geomanist_Regular/stylesheet.css';
+@import './fonts/Geomanist/Geomanist_Bold/stylesheet.css';
+@import './fonts/Geomanist/Geomanist_Book/stylesheet.css';
+@import './fonts/Geomanist/Geomanist_Light/stylesheet.css';
+@import './fonts/Geomanist/Geomanist_Thin/stylesheet.css';
+@import './fonts/Tofino/Tofino_Light/style.css';
+@import './fonts/Tofino/Tofino_Thin/style.css';
+@import './fonts/Tofino/Tofino_Regular/style.css';
+@import './fonts/Tofino/Tofino_Medium/style.css';
+@import './fonts/Tofino/Tofino_Book/style.css';
+@import './fonts/Tofino/Tofino_Bold/style.css';
+@import './agate.css';
+
+html{
+	height:100%;
+}
+
+body {
+	background:#fff;
+	font-family: "Aileron","lucida grande","Segoe UI",arial,verdana,"lucida sans unicode",tahoma,sans-serif;
+	color:#1a1d72;
+}
+
+.nav ul li {text-align: center; position: relative; float: left; padding-right: 30px;}
+.nav ul li a {font-family:"Source Sans Pro"; font-size:15px; display: inline-block; padding: 13px 0px 15px 0px; text-decoration: none; 
+				white-space: nowrap; color: #1a1d72; opacity: 0.85; outline: none;  -webkit-transition: opacity 0.6s;
+    transition: opacity 0.6s; text-transform: uppercase;}
+
+.nav li:hover a {opacity:1.0}
+
+h2{
+	font-family:"geomanistregular";
+	font-size:1.8em;
+}
+
+h4 {
+	font-weight:400;
+}
