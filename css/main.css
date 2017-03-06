@@ -23,7 +23,7 @@ body {
 
 .nav ul li {text-align: center; position: relative; float: left; padding-right: 30px;}
 .nav ul li a {font-family:"Source Sans Pro"; font-size:15px; display: inline-block; padding: 13px 0px 15px 0px; text-decoration: none; 
-				white-space: nowrap; color: #1a1d72; opacity: 0.85; outline: none;  -webkit-transition: opacity 0.6s;
+				white-space: nowrap; color: #1a1d72; opacity: 0.6; outline: none;  -webkit-transition: opacity 0.6s;
     transition: opacity 0.6s; text-transform: uppercase;}
 
 .nav li:hover a {opacity:1.0}

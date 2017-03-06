@@ -16,7 +16,7 @@ const style = {
 		backgroundSize: "cover",
 		backgroundPosition:"50% 50%",
 		width: "100%",
-		height: "32vw"
+		height: "27vw"
 	}
 }
 
@@ -37,7 +37,7 @@ var LikeButton = React.createClass({
 			console.log("item is liked");
 			style.opacity = 1;
 		}
-		return(<div style={style} onClick={this.onClick}><Icon name='heart' width={46} height={46} /></div>)
+		return(<div style={style} onClick={this.onClick}><Icon name='heart' width={38} height={38} /></div>)
 	}
 })
 
@@ -49,10 +49,27 @@ var Item = React.createClass({
 		img: string,
 		description: string,
 	},
+	getInitialState: function() {
+    	return {mouseEnterTime: null};
+	},
+	onMouseEnter: function(){
+		this.setState({mouseEnterTime: Date.now()});
+	},
+	onMouseLeave: function(){
+		if (this.state.mouseEnterTime != null){
+			var waitTime = (Date.now() - this.state.mouseEnterTime)/1000;
+			if (waitTime >= 1.5) { // only track hover events longer than 90 seconds
+ 				Actions.trackEvent(Store.getUID(), this.props.id, g.Behaviors.Hover, waitTime, Math.floor(Date.now() / 1000));
+			}
+		} else {
+			console.log("ERROR: onMouseLeave detected on node with no mouseEnterTime.");
+		}
+		this.setState({mouseEnterTime: null});
+	},
 	render: function(){
 		style.img.backgroundImage = "url('"+this.props.img+"')";
 		return (
-			<div style={style.box}>
+			<div style={style.box} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
 				<div style={style.img}></div>
 				<h2>{this.props.name}<div style={{display:"inline-block", float:"right", marginTop:-5}}><LikeButton id={this.props.id} /></div></h2>
 

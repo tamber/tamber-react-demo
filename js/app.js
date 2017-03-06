@@ -6,6 +6,7 @@ var Nav = require('./components/Nav.react'),
 var Actions = require('./Actions');
 var Store = require('./Store'),
 	NotificationsStore = require('./NotificationsStore');
+var g = require('./Globals');
 
 // Notification handling
 var NotificationStack = require('react-notification').NotificationStack;
@@ -28,6 +29,12 @@ var App = React.createClass({
 	componentWillUnmount: function() {
 		AccountStore.removeChangeListener(this._onChange);
 		NotificationsStore.removeChangeListener(this._onChange);
+	},
+	shouldComponentUpdate: function(nextProps, nextState){
+		if ((this.props.items != [] && this.props.item != null) && this.props.item != nextProps.items && this.nextProps.section == g.Section.Recommended) {
+			Actions.updateRecs(Store.getUID());
+		}
+		return true;
 	},
 	render: function(){
 		if(this.state.events == null){

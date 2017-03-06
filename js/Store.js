@@ -59,8 +59,17 @@ function handleEventTracked(events, recommended){
 	_store.events.push(events[0]);
 }
 
+function eventCompare(a,b) {
+  if (a.created < b.created)
+    return -1;
+  if (a.created > b.created)
+    return 1;
+  return 0;
+}
+
 function handleEventsRetrieved(events){
 	console.log("events retrieved:", events);
+	events.sort(eventCompare);
 	_store.events = events;
 }
 

@@ -37,6 +37,18 @@ var Actions = {
 			});
 		});
 	},
+	updateRecs: function(user){
+		mytamber.Discover.Recommended(
+			{user: user},
+			function(err, result) {
+				AppDispatcher.handleServerAction({
+				  actionType: Constants.ITEMS_RETRIEVED,
+				  err: err,
+				  result: result
+				});
+			}
+		);
+	},
 	goToSection: function(section, user){
 		AppDispatcher.handleViewAction({
 		  actionType: Constants.GOTO_SECTION,

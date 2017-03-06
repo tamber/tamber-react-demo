@@ -17,14 +17,13 @@ const style = {
 	},
 	logo: {
 		float:"left",
-		marginLeft: 57,
-		marginTop:21,
-		width:96,
-		height:23
+		marginLeft: 13,
+		marginTop:19,
+		width:103
 	},
 	logo_img: {
 		width:"100%",
-		height:23,
+		height:26,
 		backgroundImage:"url('./img/dark-logo.svg')",
 		backgroundSize: "cover",
 		display:"inline-block",
@@ -32,6 +31,7 @@ const style = {
 	},
 	tabs: {
 		fontFamily:'Aileron',
+		fontWeight:"600",
 		WebkitFontSmoothing:'subpixel-antialiased',
 		listStyle: "none",
 		marginTop:10,
