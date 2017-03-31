@@ -11,7 +11,8 @@ var Globals = {
 	},
 	Behaviors: {
 		Like: "like",
-		Hover: "hover"
+		Hover: "hover",
+		ViewDetail: "view_detail"
 	}
 }
 

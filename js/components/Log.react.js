@@ -86,7 +86,7 @@ var Log = React.createClass({
 				</div>
 				<div id="logs-list" style={style.logs}>
 					{logs}
-					<div style={{height:60}}></div>
+					<div style={{height:140}}></div>
 				</div>
 				<div style={style.credits}>
 					<Icon name='credits' width={"71%"} height={"100%"} />

@@ -1,6 +1,6 @@
 var AppDispatcher = require('./dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
-var ConsoleAppConstants = require('./constants/Constants');
+var Constants = require('./constants/Constants');
 var assign = require('object-assign');
 
 var OrderedSet = require('immutable').OrderedSet;
@@ -67,7 +67,7 @@ var NotificationsStore = assign({}, EventEmitter.prototype, {
     var action = payload.action;
 
     switch(action.actionType) {
-      case ConsoleAppConstants.REMOVE_NOTIFICATION:
+      case Constants.REMOVE_NOTIFICATION:
         removeNotification(action.data);
         NotificationsStore.emitChange();
         break;
