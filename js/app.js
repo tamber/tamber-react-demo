@@ -14,11 +14,11 @@ var NotificationStack = require('react-notification').NotificationStack;
 var OrderedSet = require('immutable').OrderedSet;
 
 function getState(){
-	console.log("app getState called");
 	var state = Store.GetState();
 	state.notifications = NotificationsStore.GetNotificationsState().Notifications;
 	return state;
 }
+var gotRecs = false;
 
 var App = React.createClass({
 	getInitialState: function() {
@@ -33,32 +33,25 @@ var App = React.createClass({
 		NotificationsStore.removeChangeListener(this._onChange);
 	},
 	shouldComponentUpdate: function(nextProps, nextState){
-		console.log("app shouldComponentUpdate nextState");
-		// if ((this.props.items != [] && this.props.items != null) && this.props.items != nextProps.items && this.nextProps.section == g.Section.Recommended) {
-		// 	Actions.updateRecs(Store.getUID());
-		// }
 		return true;
 	},
 	render: function(){
-		console.log("app render called");
 		var spinnerPage = <div className="spinner-container"> <span className="pong-loader"></span></div>;
 		if (this.state.uid == null){
-			console.log("this.state.uid:", this.state.uid);
 			Actions.init();
 			return spinnerPage;
 		} else if (this.state.initUser){
-			console.log("this.state.initUser");
 			return (<Onboarding items={this.state.items} />)
 		} else if(this.state.events == null){
-			console.log("this.state.events == null");
 			Actions.retrieveEvents(this.state.uid);
 			return spinnerPage
 		} else if (this.state.items.length < 1){
-			console.log("this.state.items.length < 1");
-			Actions.updateRecs(this.state.uid);
-			return spinnerPage
+			if (!gotRecs) {
+				Actions.updateRecs(this.state.uid);
+				gotRecs = true;
+				return spinnerPage
+			}
 		}
-		console.log("!this.props.recsRefreshing:", !this.state.recsRefreshing);
 		return(
 			<div>
 				<Nav section={this.state.section} />

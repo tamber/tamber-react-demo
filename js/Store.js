@@ -5,96 +5,89 @@ import assign from 'object-assign';
 import g from './Globals';
 import Notifications from './NotificationsStore';
 
+var ItemsDB = require("../data/items.json");
+
 var CHANGE_EVENT = 'change';
 
-var testItem = {
-		item: "400",
-		properties: {
-			name: "Portal", 
-			description: "<p>Portal&trade; is a new single player game from Valve. Set in the mysterious Aperture Science Laboratories, Portal has been called one of the most innovative new games on the horizon and will offer gamers hours of unique gameplay.<\/p>\r\n\t\t\t\t\t<p>The game is designed to change the way players approach, manipulate, and surmise the possibilities in a given environment; similar to how Half-Life&reg; 2's Gravity Gun innovated new ways to leverage an object in any given situation.<\/p>\r\n\t\t\t\t\t<p>Players must solve physical puzzles and challenges by opening portals to maneuvering objects, and themselves, through space.<\/p>\r\n\t\t\t\t\t",
-			header_image: "http://cdn.akamai.steamstatic.com/steam/apps/400/header.jpg"
-
-		}
-	};
 var testItems = [
 	{
-		"id": "620",
+		"id": "78159",
 		"properties": {
-			"description": "The \u0026quot;Perpetual Testing Initiative\u0026quot; has been expanded to allow you to design co-op puzzles for you and your friends!",
-			"header_image": "http://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg?t=1487174418",
-			"name": "Portal 2",
-			"removed": false
+			"discussion_url": "https://www.producthunt.com/posts/pixel-by-google?utm_campaign=producthunt-api\u0026utm_medium=api\u0026utm_source=Application%3A+Tamber+%28ID%3A+4484%29",
+			"name": "Pixel by Google",
+			"redirect_url": "https://www.producthunt.com/r/860646657399af/78159?app_id=4484",
+			"screenshot_300px": "https://api.url2png.com/v6/P5329C1FA0ECB6/8a1f30bab96c833dfa0d12b46ed00f71/png/?thumbnail_max_width=300\u0026url=https%3A%2F%2Fblog.google%2Fproducts%2Fpixel%2Fintroducing-pixel-our-new-phone-made-google%2F",
+			"screenshot_850px": "https://api.url2png.com/v6/P5329C1FA0ECB6/17f73e0cebcf878e343c6490d4ea5005/png/?thumbnail_max_width=850\u0026url=https%3A%2F%2Fblog.google%2Fproducts%2Fpixel%2Fintroducing-pixel-our-new-phone-made-google%2F",
+			"tagline": "Google's new phones, Pixel and Pixel XL",
+			"thumbnail_url": "https://ph-files.imgix.net/65d05909-4f01-42e6-a53d-e970250fe0a6?auto=format\u0026fit=crop\u0026h=570\u0026w=430",
+			"user_id": 72708
 		},
 		"tags": null,
-		"created": 0
-	}, 
-	{
-		"id": "292030",
-		"properties": {
-			"description": "The Witcher is a story-driven, next-generation open world role-playing game, set in a visually stunning fantasy universe, full of meaningful choices and impactful consequences. In The Witcher, you play as Geralt of Rivia, a monster hunter tasked with finding a child from an ancient prophecy.",
-			"header_image": "http://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg?t=1479919850",
-			"name": "The Witcher® 3: Wild Hunt",
-			"removed": false
-		},
-		"tags": null,
-		"created": 0
+		"created": 1475599505
 	},
 	{
-		"id": "383870",
+		"id": "80878",
 		"properties": {
-			"description": "Firewatch is a single-player first-person mystery set in the Wyoming wilderness, where your only emotional lifeline is the person on the other end of a handheld radio.",
-			"header_image": "http://cdn.akamai.steamstatic.com/steam/apps/383870/header.jpg?t=1487294153",
-			"name": "Firewatch",
-			"removed": false
+			"discussion_url": "https://www.producthunt.com/posts/whale-2?utm_campaign=producthunt-api\u0026utm_medium=api\u0026utm_source=Application%3A+Tamber+%28ID%3A+4484%29",
+			"name": "Whale",
+			"redirect_url": "https://www.producthunt.com/r/e481fa02cd6f96/80878?app_id=4484",
+			"screenshot_300px": "https://api.url2png.com/v6/P5329C1FA0ECB6/68d2b617ee02ade8023035b5141d550b/png/?thumbnail_max_width=300\u0026url=https%3A%2F%2Faskwhale.com",
+			"screenshot_850px": "https://api.url2png.com/v6/P5329C1FA0ECB6/1807b03fd1c1c4d3a09f820175ea56fd/png/?thumbnail_max_width=850\u0026url=https%3A%2F%2Faskwhale.com",
+			"tagline": "Video Q\u0026A with influencers and experts 🐳",
+			"thumbnail_url": "https://ph-files.imgix.net/690ff922-3b27-4281-9397-38d7acba94ff?auto=format\u0026fit=crop\u0026h=570\u0026w=430",
+			"user_id": 2
 		},
 		"tags": null,
-		"created": 0
+		"created": 1477920583
 	},
 	{
-		"id": "3900",
+		"id": "93945",
 		"properties": {
-			"description": "With over 6 million units sold and unprecedented critical acclaim from fans and press around the world, Sid Meier's Civilization is recognized as one of the greatest PC game franchises of all-time. Now, Sid Meier and Firaxis Games will take this incredibly fun and addictive game to new heights by adding new ways to play and win, new tools to manage and expand your civilization, all-new easy to use mod capabilities and intense multiplayer modes and options*. Civilization IV will come to life like never before in a beautifully detailed, living 3D world that will elevate the gameplay experience to a whole new level. Civilization IV has already been heralded as one of the top ten games of 2005, and a must-have for gamers around the globe![/b]*Mac version's Online Multiplayer is no longer supported.[/b]",
-			"header_image": "http://cdn.akamai.steamstatic.com/steam/apps/3900/header.jpg?t=1447366360",
-			"name": "Sid Meier's Civilization® IV",
-			"removed": false
+			"discussion_url": "https://www.producthunt.com/posts/breaker-4?utm_campaign=producthunt-api\u0026utm_medium=api\u0026utm_source=Application%3A+Tamber+%28ID%3A+4484%29",
+			"name": "Breaker",
+			"redirect_url": "https://www.producthunt.com/r/9b21f0ba72cfd9/93945?app_id=4484",
+			"screenshot_300px": "https://api.url2png.com/v6/P5329C1FA0ECB6/9066c13625c35c24d912150d879387e7/png/?thumbnail_max_width=300\u0026url=https%3A%2F%2Fbreaker.audio%2F",
+			"screenshot_850px": "https://api.url2png.com/v6/P5329C1FA0ECB6/64ed4877eb611fd376de60eca3791918/png/?thumbnail_max_width=850\u0026url=https%3A%2F%2Fbreaker.audio%2F",
+			"tagline": "The best app for listening to podcasts, with your friends 🎧",
+			"thumbnail_url": "https://ph-files.imgix.net/5de38845-9c59-485a-be99-40cab79665d5?auto=format\u0026fit=crop\u0026h=570\u0026w=430",
+			"user_id": 2
 		},
 		"tags": null,
-		"created": 0
+		"created": 1490079840
 	},
 	{
-		"id": "72850",
+		"id": "77458",
 		"properties": {
-			"description": "The Game of a GenerationVoted 'The Best Game of the Generation' by amazon.co.uk users, andAbout the GameEPIC FANTASY REBORNThe next chapter in the highly anticipated Elder Scrolls saga arrives from the makers of the 2006 and 2008 Games of the Year, Bethesda Game Studios. Skyrim reimagines and revolutionizes the open-world fantasy epic, bringing to life a complete virtual world open for you to explore any way you choose.LIVE ANOTHER LIFE, IN ANOTHER WORLDPlay any type of character you can imagine, and do whatever you want; the legendary freedom of choice, storytelling, and adventure of The Elder Scrolls is realized like never before.ALL NEW GRAPHICS AND GAMEPLAY ENGINESkyrim’s new game engine brings to life a complete virtual world with rolling clouds, rugged mountains, bustling cities, lush fields, and ancient dungeons.YOU ARE WHAT YOU PLAYChoose from hundreds of weapons, spells, and abilities.  The new character system allows you to play any way you want and define yourself through your actions.DRAGON R...",
-			"header_image": "http://cdn.akamai.steamstatic.com/steam/apps/72850/header.jpg?t=1486501742",
-			"name": "The Elder Scrolls V: Skyrim",
-			"removed": false
+			"discussion_url": "https://www.producthunt.com/posts/houseparty-4?utm_campaign=producthunt-api\u0026utm_medium=api\u0026utm_source=Application%3A+Tamber+%28ID%3A+4484%29",
+			"name": "Houseparty",
+			"redirect_url": "https://www.producthunt.com/r/b2ab0d7417bed5/77458?app_id=4484",
+			"screenshot_300px": "https://api.url2png.com/v6/P5329C1FA0ECB6/510cd822720314ea012e8879ae5a6bd4/png/?thumbnail_max_width=300\u0026url=http%3A%2F%2Fjoinhouse.party",
+			"screenshot_850px": "https://api.url2png.com/v6/P5329C1FA0ECB6/543574c2b33e15ad7d0c9578145e30f9/png/?thumbnail_max_width=850\u0026url=http%3A%2F%2Fjoinhouse.party",
+			"tagline": "If FaceTime was built as a social network 🏠🎉",
+			"thumbnail_url": "https://ph-files.imgix.net/be2d3574-3311-49a0-9dfc-cf08143aa4d3?auto=format\u0026fit=crop\u0026h=570\u0026w=430",
+			"user_id": 14768
 		},
 		"tags": null,
-		"created": 0
+		"created": 1475046946
 	},
 	{
-		"id": "8870",
+		"id": "76024",
 		"properties": {
-			"description": "Indebted to the wrong people, with his life on the line, veteran of the U.S. Cavalry and now hired gun, Booker DeWitt has only one opportunity to wipe his slate clean. He must rescue Elizabeth, a mysterious girl imprisoned since childhood and locked up in the flying city of Columbia. Forced to trust one another, Booker and Elizabeth form a powerful bond during their daring escape. Together, they learn to harness an expanding arsenal of weapons and abilities, as they fight on zeppelins in the clouds, along high-speed Sky-Lines, and down in the streets of Columbia, all while surviving the threats of the air-city and uncovering its dark secret.Key FeaturesThe City in the Sky – Leave the depths of Rapture to soar among the clouds of Columbia. A technological marvel, the flying city is a beautiful and vibrant world that holds a very dark secret. Unlikely Mission – Set in 1912, hired gun Booker DeWitt must rescue a mysterious girl from the sky-city of Columbia or never leave it alive. Whip, Zip, and Kill –...",
-			"header_image": "http://cdn.akamai.steamstatic.com/steam/apps/8870/header.jpg?t=1486444091",
-			"name": "BioShock Infinite",
-			"removed": false
+			"discussion_url": "https://www.producthunt.com/posts/self-driving-uber?utm_campaign=producthunt-api\u0026utm_medium=api\u0026utm_source=Application%3A+Tamber+%28ID%3A+4484%29",
+			"name": "Self-Driving Uber",
+			"redirect_url": "https://www.producthunt.com/r/657ad664e36c94/76024?app_id=4484",
+			"screenshot_300px": "https://api.url2png.com/v6/P5329C1FA0ECB6/4644324d8bcb31e4538c45bf4584e417/png/?thumbnail_max_width=300\u0026url=https%3A%2F%2Fnewsroom.uber.com%2Fpittsburgh-self-driving-uber",
+			"screenshot_850px": "https://api.url2png.com/v6/P5329C1FA0ECB6/794301e2595510876edcf23f51157df8/png/?thumbnail_max_width=850\u0026url=https%3A%2F%2Fnewsroom.uber.com%2Fpittsburgh-self-driving-uber",
+			"tagline": "The world’s first Self-Driving Ubers",
+			"thumbnail_url": "https://ph-files.imgix.net/44547975-4b53-40db-a67f-9877203cd648?auto=format\u0026fit=crop\u0026h=570\u0026w=430",
+			"user_id": 72708
 		},
 		"tags": null,
-		"created": 0
-	},
-	{
-		"id": "377160",
-		"properties": {
-			"description": "Bethesda Game Studios, the award-winning creators of Fallout 3 and The Elder Scrolls V: Skyrim, welcome you to the world of Fallout 4 – their most ambitious game ever, and the next generation of open-world gaming.",
-			"header_image": "http://cdn.akamai.steamstatic.com/steam/apps/377160/header.jpg?t=1486403180",
-			"name": "Fallout 4",
-			"removed": false
-		},
-		"tags": null,
-		"created": 0
+		"created": 1473850788
 	}
 ];
+
+cleanItems(testItems);
 
 var defaultItems = testItems;
 
@@ -131,7 +124,6 @@ function initUID(){
 	var uid = localStorage.getItem(g.LocalStorageKey.UserId);
 	if(uid == null || uid == 'undefined'){
 		uid = simpleIDGen();
-		console.log("initUID: setting initUser to true");
 		_store.initUser = true;
 		localStorage.setItem(g.LocalStorageKey.UserId, uid);
 		_store.items = defaultItems;
@@ -140,7 +132,6 @@ function initUID(){
 }
 
 function handleInitUser(){
-	console.log("handleInitUser: setting initUser to false");
 	_store.initUser = false;
 	_store.items = [];
 }
@@ -152,12 +143,11 @@ function handleSection(sect){
 var eventDispatcher = {};
 
 function undoEvent(event) {
-	console.log("undo event:", event, "dispatcher:", eventDispatcher);
 	if(event in eventDispatcher) {
 		for(var i = 0; i < _store.events.length; i++){
 			if(_store.events[i] == event) {
-				console.log("found event, splicing");
 				_store.events.splice(i, 1);
+				break;
 			}
 		}
 		delete eventDispatcher[event];
@@ -165,14 +155,18 @@ function undoEvent(event) {
 }
 
 function handleEventTracked(event){
+	if (event == null){
+		console.log("ERROR: handleEventTracked called on NULL EVENT");
+		return
+	}
 	eventDispatcher[event] = true;
 	if(_store.events == null){
 		_store.events = [];
 	}
+	event.object = "event";
 	_store.events.push(event);
 	if(event.get_recs){
 		_store.recsRefreshing = true;
-		console.log("recs refreshing");
 	}
 }
 
@@ -186,7 +180,6 @@ function handleEventTrackedResponse(events, recommended){
 	}
 	if(Object.keys(eventDispatcher).length<1){
 		_store.recsRefreshing = false;
-		console.log("recs refreshed");
 	}
 }
 
@@ -199,29 +192,42 @@ function eventCompare(a,b) {
 }
 
 function handleEventsRetrieved(events){
-	console.log("event/retrieve events:", events);
 	events.sort(eventCompare);
 	_store.events = events;
 	if(_store.events.length < 1) { // initial user
-		console.log("handleEventsRetrieved length < 1, setting initUser to true");
 		_store.items = defaultItems;
 		_store.initUser = true;
 	}
 }
 
-function handleItems(items){
+function cleanItems(items) {
 	items.map(function(item, index){
-		items[index].id = item.item;
+		if(item.hasOwnProperty('item')){
+			items[index].id = item.item;
+		} else {
+			items[index].item = item.id;
+		}
+		items[index].properties.name = item.properties[g.ItemKeys.name];
+		items[index].properties.header_image = item.properties[g.ItemKeys.header_image];
+		items[index].properties.description = item.properties[g.ItemKeys.description];
+		items[index].properties.url = item.properties[g.ItemKeys.url];
 	});
+}
+function handleItems(discoverItems){
+	var items = [];
+	for(var i in discoverItems){
+		if(discoverItems[i].item in ItemsDB) {
+			items.push(ItemsDB[discoverItems[i].item]);
+		}
+	}
+	cleanItems(items);
 	_store.items = items;
 }
 
 function handleInit(){
-	console.log("handleInit() called");
 	if (_store.uid == null){
       	initUID();
       	loadEvents();
-      	console.log("init store:", _store);
     }
 }
 
@@ -230,7 +236,6 @@ var Store = assign({}, EventEmitter.prototype, {
 		if (_store.uid == null){
 	      	initUID();
 	      	loadEvents();
-	      	console.log("GetState store:", _store);
 	    }
 		return _store;
 	},
@@ -239,7 +244,13 @@ var Store = assign({}, EventEmitter.prototype, {
 	},
 	isItemLiked: function(id) {
 		for (var i in _store.events){
+
 			var event = _store.events[i];
+			if(event == null) {
+				_store.events.splice(i, 1);
+				continue;
+			}
+			// console.log("event:", event);
 			if (event.item == id && event.behavior == g.Behaviors.Like) {
 				return true;
 			}
@@ -300,7 +311,7 @@ var Store = assign({}, EventEmitter.prototype, {
 		    	_store.recsRefreshing = true;
 		    	 Store.emitChange();
 		        break;
-		        
+
 		    case Constants.ITEMS_RETRIEVED:
 		    	if (action.err) {
 					handleError(action.err);

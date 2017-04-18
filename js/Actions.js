@@ -2,11 +2,11 @@ import AppDispatcher from './dispatcher/AppDispatcher';
 import Constants from './constants/Constants';
 import tamberPkg from 'tamber';
 import g from './Globals';
+import keys from './keys';
 
-const tamber = tamberPkg('tdQovPrfnduec1jhfuJi', 'nwHbdpsSTqmu19D0YGIG');
-tamber.setApiUrl('https://works.tamber.com/v1');
+const tamber = tamberPkg(keys.ProjectKey, keys.EngineKey);
 
-var NUM_RECS = 30;
+var NUM_RECS = 50;
 
 var pending = {
 	trackEvent: {},
@@ -37,7 +37,6 @@ var Actions = {
 			get_recs.number = NUM_RECS;
 			event.get_recs = get_recs;
 		}
-		console.log("tracking event:", event);
 
 		if (event in pending.trackEvent){
 			console.log("request already pending for event", event);
@@ -91,7 +90,6 @@ var Actions = {
 		},
 		function(err, result) {
 			pending.updateRecs = false;
-			console.log("discover/recommended {get_properties: true} result:", result, "err:", err);
 			AppDispatcher.handleServerAction({
 			  actionType: Constants.ITEMS_RETRIEVED,
 			  err: err,
@@ -107,9 +105,6 @@ var Actions = {
 
 		switch (section) {
 			case g.Section.Recommended:
-				// AppDispatcher.handleViewAction({
-				//   actionType: Constants.RETRIEVE_ITEMS
-				// });
 				tamber.discover.recommended({
 					user: user,
 					number: NUM_RECS,
@@ -125,9 +120,6 @@ var Actions = {
 				});
 				break;
 			case g.Section.Hipster:
-				// AppDispatcher.handleViewAction({
-				//   actionType: Constants.RETRIEVE_ITEMS
-				// });
 				tamber.discover.uac({
 					number: NUM_RECS,
 					get_properties: true
@@ -142,9 +134,6 @@ var Actions = {
 				});
 				break;
 			case g.Section.Hot:
-				// AppDispatcher.handleViewAction({
-				//   actionType: Constants.RETRIEVE_ITEMS
-				// });
 				tamber.discover.hot({
 					number: NUM_RECS,
 					get_properties: true
