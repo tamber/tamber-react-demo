@@ -44,18 +44,18 @@ var Onboarding = React.createClass({
 			},
 			logo: {
 				float:"left",
-				marginLeft: 22,
-				marginTop:7,
-				width:103
+				marginLeft: 26,
+				marginTop:4,
+				width:95
 			},
 			logo_img: {
 				width:"100%",
-				height:26,
+				height:23,
 				backgroundImage:"url('./img/dark-logo.svg')",
 				backgroundSize: "cover",
 				display:"inline-block",
 				position:"relative"
-			},
+			}
 		}
 		return (<div>
 					<div style={style.nav}>

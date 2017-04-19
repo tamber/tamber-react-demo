@@ -17,13 +17,13 @@ const style = {
 	},
 	logo: {
 		float:"left",
-		marginLeft: 13,
-		marginTop:19,
-		width:103
+		marginLeft: 26,
+		marginTop:16,
+		width:95
 	},
 	logo_img: {
 		width:"100%",
-		height:26,
+		height:23,
 		backgroundImage:"url('./img/dark-logo.svg')",
 		backgroundSize: "cover",
 		display:"inline-block",
@@ -35,7 +35,7 @@ const style = {
 		WebkitFontSmoothing:'subpixel-antialiased',
 		listStyle: "none",
 		marginTop:10,
-		marginLeft: 40,
+		marginLeft: 28,
 		textDecoration:"none",
 		float: "left"
 	},
