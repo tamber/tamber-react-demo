@@ -1,5 +1,5 @@
 # tamber-react-demo
-Tamber Recommendations Demo App
+Recommend ProductHunt posts with your [Tamber][tamber] engine.
 
 Follow the [quick start guide here][quickstart] to setup your Tamber engine and seed it with ProductHunt events data.
 
@@ -26,4 +26,5 @@ Note: As long as `watchify` is running, it will automatically rebuild the app wh
 
 Open `index.html` in the browser of your choice (Chrome is recommended) and have fun!
 
+[tamber]: https://tamber.com
 [quickstart]: https://tamber.com/docs/start
