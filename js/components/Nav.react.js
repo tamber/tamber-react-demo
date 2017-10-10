@@ -56,7 +56,8 @@ var Nav = React.createClass({
 		var r = g.Section.Recommended,
 			u = g.Section.Hipster,
 			h = g.Section.Hot,
-			p = g.Section.Popular;
+			p = g.Section.Popular,
+			n = g.Section.New;
 		return (
 			<div className="nav" style={style.container}>
 				<div style={style.logo}><div style={style.logo_img}></div></div>
@@ -65,6 +66,7 @@ var Nav = React.createClass({
 					<li><a href="#" style={this.props.section == u ? style.tabActive : {}} onClick={this.handleTabClick.bind(null, u)}>Hipster</a></li>
 					<li><a href="#" style={this.props.section == h ? style.tabActive : {}} onClick={this.handleTabClick.bind(null, h)}>Hot</a></li>
 					<li><a href="#" style={this.props.section == p ? style.tabActive : {}} onClick={this.handleTabClick.bind(null, p)}>Popular</a></li>
+					<li><a href="#" style={this.props.section == n ? style.tabActive : {}} onClick={this.handleTabClick.bind(null, n)}>New</a></li>
 				</ul>
 			</div>)
 	}

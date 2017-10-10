@@ -4,6 +4,9 @@ import Constants from './constants/Constants';
 import assign from 'object-assign';
 import g from './Globals';
 import Notifications from './NotificationsStore';
+var db = require('store');
+
+var APP_CONFIG = require('../package.json').app_config;
 
 var ItemsDB = require("../data/items.json");
 
@@ -93,9 +96,10 @@ var defaultItems = testItems;
 
 var _store = {
 	// uid: "53875128",
-	uid: null,
+	initialized: false,
 	initUser: false,
 	section: g.Section.Recommended,
+	currentItem: null,
 	events: null,
 	recsRefreshing: false,
 	items: []
@@ -115,20 +119,23 @@ function saveEvents(id){
 
 function loadEvents(){
 	_store.events = localStorage.getItem(g.LocalStorageKey.Events);
-	if(_store.events != null && _store.length < 1){
+	if(_store.events != null && _store.events.length < 1){
 		_store.events = null;
 	}
 }
 
 function initUID(){
-	var uid = localStorage.getItem(g.LocalStorageKey.UserId);
-	if(uid == null || uid == 'undefined'){
-		uid = simpleIDGen();
+	console.log("initUID called");
+	var guestId = db.get('tmb_uid');
+	if(guestId == null || guestId == 'undefined'){
 		_store.initUser = true;
-		localStorage.setItem(g.LocalStorageKey.UserId, uid);
-		_store.items = defaultItems;
+		if(APP_CONFIG.onboarding){
+			_store.items = defaultItems;
+		} else {
+			_store.items = [];
+		}
 	}
-	_store.uid = uid;
+	_store.initialized = true;
 }
 
 function handleInitUser(){
@@ -138,6 +145,12 @@ function handleInitUser(){
 
 function handleSection(sect){
 	_store.section = sect;
+}
+
+function handleItemPage(item){
+	_store.section = g.Section.Item;
+	_store.currentItem = item;
+	_store.items = [];
 }
 
 var eventDispatcher = {};
@@ -159,6 +172,9 @@ function handleEventTracked(event){
 		console.log("ERROR: handleEventTracked called on NULL EVENT");
 		return
 	}
+	if(!APP_CONFIG.onboarding){
+		_store.initUser = false;
+	}
 	eventDispatcher[event] = true;
 	if(_store.events == null){
 		_store.events = [];
@@ -168,6 +184,7 @@ function handleEventTracked(event){
 	if(event.get_recs){
 		_store.recsRefreshing = true;
 	}
+	console.log(_store.events);
 }
 
 function handleEventTrackedResponse(events, recommended){
@@ -194,9 +211,15 @@ function eventCompare(a,b) {
 function handleEventsRetrieved(events){
 	events.sort(eventCompare);
 	_store.events = events;
-	if(_store.events.length < 1) { // initial user
-		_store.items = defaultItems;
-		_store.initUser = true;
+	if(_store.events.length < 1){
+		if (APP_CONFIG.onboarding) { // initial user
+			_store.items = defaultItems;
+			_store.initUser = true;
+		} else {
+			// _store.section = g.Section.Popular;
+		}
+	} else if(!APP_CONFIG.onboarding){
+		_store.initUser = false;
 	}
 }
 
@@ -213,30 +236,45 @@ function cleanItems(items) {
 		items[index].properties.url = item.properties[g.ItemKeys.url];
 	});
 }
+
 function handleItems(discoverItems){
 	var items = [];
+	if(!APP_CONFIG.onboarding){
+		_store.initUser = false;
+	}
 	for(var i in discoverItems){
+		var item = discoverItems[i];
 		if(discoverItems[i].item in ItemsDB) {
 			items.push(ItemsDB[discoverItems[i].item]);
+		} else {
+			items.push(item);
 		}
 	}
 	cleanItems(items);
+	// console.log("handleItems:", items);
 	_store.items = items;
 }
 
 function handleInit(){
-	if (_store.uid == null){
+	// db.remove('tmb_uid');
+	var guestId = db.get('tmb_uid');
+	if (guestId == null || guestId == 'undefined'){
+		// _store.section = g.Section.Popular;
       	initUID();
       	loadEvents();
     }
+    _store.initialized = true;
+    console.log("_store.initialized", _store.initialized);
+    // console.log("initialized set to true");
 }
 
 var Store = assign({}, EventEmitter.prototype, {
 	GetState: function(){
-		if (_store.uid == null){
-	      	initUID();
-	      	loadEvents();
-	    }
+		handleInit();
+		// if (!_store.initialized && APP_CONFIG.onboarding){
+	 //      	initUID();
+	 //      	loadEvents();
+	 //    }
 		return _store;
 	},
 	getUID: function(){
@@ -271,6 +309,7 @@ var Store = assign({}, EventEmitter.prototype, {
 		switch(action.actionType) {
 			case Constants.INIT:
 				handleInit();
+				console.log("emitting change");
 		        Store.emitChange();
 		        break;
 			// View Actions
@@ -278,6 +317,10 @@ var Store = assign({}, EventEmitter.prototype, {
 				handleSection(action.data);
 		        Store.emitChange();
 		        break;
+		    case Constants.GOTO_ITEM_PAGE:
+		    	handleItemPage(action.data);
+		    	Store.emitChange();
+		    	break;
 		    case Constants.INIT_USER:
 		    	handleInitUser();
 		    	Store.emitChange();

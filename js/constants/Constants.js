@@ -4,6 +4,7 @@ module.exports = keyMirror({
 	INIT: null,
 	INIT_USER: null,
 	GOTO_SECTION: null,
+	GOTO_ITEM_PAGE: null,
 	EVENT_TRACKED: null,
 	EVENT_TRACKED_RESPONSE: null,
 	EVENTS_RETRIEVED: null,

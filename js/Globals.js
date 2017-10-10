@@ -1,3 +1,7 @@
+import keys from './keys';
+import tamberPkg from 'tamber';
+const tamber = tamberPkg(keys.ProjectKey);
+tamber.setTrackGuests(true);
 
 var PHKeys = {
 	name: "name",
@@ -14,11 +18,13 @@ var SteamKeys = {
 }
 
 var Globals = {
+	tamber: tamber,
 	Section: {
 		Recommended: 0,
 		Hipster: 1,
 		Popular: 2,
-		Hot: 3
+		Hot: 3,
+		Item: 4
 	},
 	LocalStorageKey: {
 		UserId: "user",

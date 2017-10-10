@@ -1,22 +1,27 @@
 {
   "name": "tamber-react-demo",
   "version": "0.0.1",
+  "app_config": {
+    "onboarding": false
+  },
   "description": "Tamber react app demo.",
   "repository": "https://github.com/tamber/tamber-react-demo",
   "main": "js/app.js",
   "dependencies": {
-    "tamber": "^1.0.6",
+    "tamber": "^1.0.10",
     "flux": "^2.1.1",
     "keymirror": "~0.1.0",
     "object-assign": "^1.0.0",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
     "react-svg-icons": "^0.2.0",
+    "react-iframe": "^1.0.7",
     "jquery": "^3.1.1",
     "react-notification": "^5.0.0",
     "immutable": "^3.7.4",
     "react-syntax-highlighter": "^5.0.0",
-    "json-loader": "^0.5.4"
+    "json-loader": "^0.5.4",
+    "store": "^2.0.12"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",

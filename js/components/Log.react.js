@@ -76,9 +76,12 @@ var Log = React.createClass({
 		scrollToBottom();
 	},
 	render: function(){
-		var logs = this.props.events.map(function(event, index){
-			return <LogBlock key={index} event={event} />
-		});
+		var logs = [];
+		if(this.props.events != null){
+			logs = this.props.events.map(function(event, index){
+				return <LogBlock key={index} event={event} />
+			});
+		}
 		return (
 			<div>
 				<div style={style.container}>

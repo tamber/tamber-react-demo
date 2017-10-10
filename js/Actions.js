@@ -1,10 +1,7 @@
 import AppDispatcher from './dispatcher/AppDispatcher';
 import Constants from './constants/Constants';
-import tamberPkg from 'tamber';
 import g from './Globals';
-import keys from './keys';
-
-const tamber = tamberPkg(keys.ProjectKey, keys.EngineKey);
+var db = require('store');
 
 var NUM_RECS = 50;
 
@@ -16,21 +13,25 @@ var pending = {
 
 var Actions = {
 	init: function(){
-		AppDispatcher.handleViewAction({
-		  actionType: Constants.INIT
-		});
+		console.log("init called");
+		// AppDispatcher.handleViewAction({
+		//   actionType: Constants.INIT
+		// });
+		var guestId = db.get('tmb_uid');
+		if (guestId != null && guestId != 'undefined'){
+			this.retrieveEvents();
+		}
 	},
 	initUser: function(){
 		AppDispatcher.handleViewAction({
 		  actionType: Constants.INIT_USER
 		});
 	},
-	trackEvent: function(user, item, behavior, value, timestamp, get_recs){
+	trackEvent: function(item, behavior, value, timestamp, get_recs){
 		var event = {
-			user: user,
 			item: item,
 			behavior: behavior,
-			value: value,
+			amount: value,
 			created: timestamp
 		};
 		if(get_recs != null){
@@ -48,7 +49,7 @@ var Actions = {
 		  actionType: Constants.TRACK_EVENT,
 		  event: event
 		});
-		tamber.event.track(event, function(err, result) {
+		g.tamber.event.track(event, function(err, result) {
 			console.log("err:", err, "result:", result);
 			delete pending.trackEvent[event];
 		     AppDispatcher.handleServerAction({
@@ -59,16 +60,15 @@ var Actions = {
 			});
 		});
 	},
-	retrieveEvents: function(user){
+	retrieveEvents: function(){
 		if (pending.retrieveEvents){
 			console.log("request already pending for retrieve events");
 			return;
 		}
 		pending.retrieveEvents = true;
-		tamber.event.retrieve({
-			user: user
-		}, function(err, result) {
+		g.tamber.event.retrieve({}, function(err, result) {
 			pending.retrieveEvents = false;
+			console.log("event retrieve:", result);
 		     AppDispatcher.handleServerAction({
 				actionType: Constants.EVENTS_RETRIEVED,
 				err: err,
@@ -76,15 +76,14 @@ var Actions = {
 			});
 		});
 	},
-	updateRecs: function(user){
+	updateRecs: function(){
 		if (pending.updateRecs){
 			console.log("request already pending for updateRecs");
 			return;
 		}
 		pending.updateRecs = true;
 
-		tamber.discover.recommended({
-			user: user,
+		g.tamber.discover.next({
 			number: NUM_RECS,
 			get_properties: true
 		},
@@ -97,21 +96,79 @@ var Actions = {
 			});
 		});
 	},
-	goToSection: function(section, user){
+	clickItem: function(item){
+		AppDispatcher.handleViewAction({
+		  actionType: Constants.GOTO_ITEM_PAGE,
+		  data: item
+		});
+		var event = {
+			item: item.id,
+			behavior: "click",
+		};
+
+		if (event in pending.trackEvent){
+			console.log("request already pending for event", event);
+			return
+		}
+		pending.trackEvent[event] = true;
+		AppDispatcher.handleViewAction({
+		  actionType: Constants.TRACK_EVENT,
+		  event: event
+		});
+		g.tamber.event.track(event, function(err, result) {
+			console.log("err:", err, "result:", result);
+			delete pending.trackEvent[event];
+		     AppDispatcher.handleServerAction({
+			  actionType: Constants.EVENT_TRACKED,
+			  err: err,
+			  event: event,
+			  result: result
+			});
+		     g.tamber.discover.next({
+				item: item.id,
+				number: 10,
+				get_properties: true,
+			},
+			function(err, result) {
+				console.log("discover/next {get_properties: true} result:", result, "err:", err);
+				AppDispatcher.handleServerAction({
+				  actionType: Constants.ITEMS_RETRIEVED,
+				  err: err,
+				  result: result
+				});
+			});
+		});
+
+	},
+	goToSection: function(section){
 		AppDispatcher.handleViewAction({
 		  actionType: Constants.GOTO_SECTION,
 		  data: section
 		});
 
 		switch (section) {
-			case g.Section.Recommended:
-				tamber.discover.recommended({
-					user: user,
-					number: NUM_RECS,
-					get_properties: true
+			case g.Section.New:
+				g.tamber.discover.new({
+					number: 20,
+					get_properties: true,
 				},
 				function(err, result) {
-					console.log("discover/recommended {get_properties: true} result:", result, "err:", err);
+					console.log("discover/new {get_properties: true} result:", result, "err:", err);
+					AppDispatcher.handleServerAction({
+					  actionType: Constants.ITEMS_RETRIEVED,
+					  err: err,
+					  result: result
+					});
+				});
+				break;
+			case g.Section.Recommended:
+				g.tamber.discover.next({
+					number: 20,
+					get_properties: true,
+					randomness:0.1
+				},
+				function(err, result) {
+					console.log("discover/next {get_properties: true} result:", result, "err:", err);
 					AppDispatcher.handleServerAction({
 					  actionType: Constants.ITEMS_RETRIEVED,
 					  err: err,
@@ -120,7 +177,7 @@ var Actions = {
 				});
 				break;
 			case g.Section.Hipster:
-				tamber.discover.uac({
+				g.tamber.discover.uac({
 					number: NUM_RECS,
 					get_properties: true
 				},
@@ -134,7 +191,7 @@ var Actions = {
 				});
 				break;
 			case g.Section.Hot:
-				tamber.discover.hot({
+				g.tamber.discover.hot({
 					number: NUM_RECS,
 					get_properties: true
 				},
@@ -151,7 +208,7 @@ var Actions = {
 				AppDispatcher.handleViewAction({
 				  actionType: Constants.RETRIEVE_ITEMS
 				});
-				tamber.discover.popular({
+				g.tamber.discover.popular({
 					number: NUM_RECS,
 					get_properties: true
 				},
